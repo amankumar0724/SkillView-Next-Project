@@ -114,12 +114,23 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
     };
   };
 
-  if (loading || status === "loading") return null;
+  // Don't return null - always render the button
+  if (status === "loading") {
+    return (
+      <Button variant="secondary" className="cursor-pointer w-full" disabled>
+        <MessageSquareIcon className="h-4 w-4 mr-2" />
+        Add Comment
+      </Button>
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="cursor-pointer w-full">
+        <Button 
+          variant="secondary" 
+          className="cursor-pointer w-full bg-secondary/80 hover:bg-secondary border border-border"
+        >
           <MessageSquareIcon className="h-4 w-4 mr-2" />
           Add Comment
         </Button>
@@ -155,7 +166,7 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
                             <div>
                               <p className="text-sm font-medium">{interviewer.name}</p>
                               <p className="text-xs text-muted-foreground">
-                                {format(comment.createdAt, "MMM d, yyyy • h:mm a")}
+                                {format(new Date(comment.createdAt), "MMM d, yyyy • h:mm a")}
                               </p>
                             </div>
                           </div>

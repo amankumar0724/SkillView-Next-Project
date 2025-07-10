@@ -148,6 +148,8 @@ function DashboardPage() {
                               </Button>
                             </div>
                           )}
+                          
+                          {/* CommentDialog component with built-in "Add Comment" button - always visible */}
                           <CommentDialog interviewId={String(interview._id)} />
                         </CardFooter>
                       </Card>
