@@ -11,7 +11,7 @@ function HomeBtn() {
 
   return (
     <Link href={"/"}>
-      <Button className="gap-2 font-medium" size={"sm"}>
+      <Button className="gap-2 font-medium cursor-pointer" size={"sm"}>
         Home
       </Button>
     </Link>

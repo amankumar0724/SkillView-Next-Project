@@ -50,10 +50,10 @@ const UserButton = () => {
         </DropdownMenu>
       ) : (
         <div className="flex justify-end p-4 gap-4">
-          <Button>
+          <Button className="cursor-pointer">
             <Link href="sign-in">Sign in</Link>
           </Button>
-          <Button>
+          <Button className="cursor-pointer">
             <Link href="sign-up">Sign up</Link>
           </Button>
         </div>

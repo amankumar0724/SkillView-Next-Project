@@ -119,7 +119,7 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="w-full">
+        <Button variant="secondary" className="cursor-pointer w-full">
           <MessageSquareIcon className="h-4 w-4 mr-2" />
           Add Comment
         </Button>
@@ -200,10 +200,10 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setIsOpen(false)}>
+          <Button className="cursor-pointer" variant="outline" onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button className="cursor-pointer" onClick={handleSubmit}>Submit</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

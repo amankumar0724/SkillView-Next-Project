@@ -77,7 +77,7 @@ function DashboardPage() {
     <div className="container mx-auto py-10">
       <div className="flex items-center mb-8">
         <Link href="/schedule">
-          <Button>Schedule New Interview</Button>
+          <Button className="cursor-pointer">Schedule New Interview</Button>
         </Link>
       </div>
 
@@ -132,7 +132,7 @@ function DashboardPage() {
                           {interview.status === "completed" && (
                             <div className="flex gap-2 w-full">
                               <Button
-                                className="flex-1"
+                                className="flex-1 cursor-pointer"
                                 onClick={() => handleStatusUpdate(String(interview._id), "succeeded")}
                               >
                                 <CheckCircle2Icon className="h-4 w-4 mr-2" />
@@ -140,7 +140,7 @@ function DashboardPage() {
                               </Button>
                               <Button
                                 variant="destructive"
-                                className="flex-1"
+                                className="flex-1 cursor-pointer"
                                 onClick={() => handleStatusUpdate(String(interview._id), "failed")}
                               >
                                 <XCircleIcon className="h-4 w-4 mr-2" />

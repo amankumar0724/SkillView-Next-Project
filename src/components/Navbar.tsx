@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Airplay, Home, LayoutDashboard, Calendar, Video } from "lucide-react";
+import { Airplay, Home, LayoutDashboard, Calendar, Video, Contact, Scroll } from "lucide-react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { FcAbout } from "react-icons/fc";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -23,6 +24,8 @@ function Navbar() {
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/schedule", label: "Schedule", icon: Calendar },
     { href: "/recordings", label: "Recordings", icon: Video },
+    // { href: "/about", label: "About", icon: Scroll},
+    { href: "/contact", label: "Contact", icon: Contact },
   ];
 
   const isActive = (href: string): boolean => {
@@ -43,7 +46,7 @@ function Navbar() {
       {/* DESKTOP NAVBAR */}
       <nav className="border-b hidden md:block">
         <div className="flex h-16 items-center justify-center px-4 container mx-auto">
-          <div className="flex items-center space-x-80">
+          <div className="flex items-center space-x-60">
             {/* LOGO */}
             <Link
               href="/"
@@ -139,7 +142,7 @@ function Navbar() {
                 )}
                 <button
                   onClick={() => signOut()}
-                  className="text-xs px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
+                  className="cursor-pointer text-xs px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
                 >
                   Sign out
                 </button>
@@ -147,7 +150,7 @@ function Navbar() {
             ) : (
               <button
                 onClick={() => signIn()}
-                className="text-xs px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
+                className="text-xs px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity cursor-pointer"
               >
                 Sign in
               </button>
@@ -165,7 +168,7 @@ function Navbar() {
               <button
                 key={link.href}
                 onClick={() => handleProtectedNavigation(link.href)}
-                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all min-w-[60px] ${
+                className={`cursor-pointer flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all min-w-[60px] ${
                   isActive(link.href)
                     ? "bg-gradient-to-r from-[#ed145c] to-[#cb3769] text-white"
                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"

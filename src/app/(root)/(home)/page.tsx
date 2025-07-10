@@ -9,6 +9,7 @@ import TimedLoader from "@/components/TimeLoader";
 import { Loader2Icon } from "lucide-react";
 import { QUICK_ACTIONS } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
@@ -19,7 +20,8 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<"start" | "join">();
   const [showLoader, setShowLoader] = useState(true);
-
+  const { data: session, status } = useSession();
+  const currentUser = session?.user;
   // Control the 2-second loader timer
   useEffect(() => {
     const timer = setTimeout(() => setShowLoader(false), 2000);
@@ -76,9 +78,17 @@ export default function Home() {
     <div className="container max-w-7xl mx-auto p-6">
       {/* Welcome Section */}
       <div className="rounded-lg bg-card p-6 border shadow-sm mb-10">
+        <div className="flex items-center gap-4 mb-4">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
-          Welcome back!
+          Welcome back 
         </h1>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
+          {currentUser?.name || "User"}
+        </h1>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
+          !
+        </h1>
+        </div>
         <p className="text-muted-foreground mt-2">
           {isInterviewer
             ? "Manage your interviews and review candidates effectively"

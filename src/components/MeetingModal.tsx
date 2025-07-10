@@ -45,10 +45,10 @@ function MeetingModal({ isOpen, onClose, title, isJoinMeeting }: MeetingModalPro
           )}
 
           <div className="flex justify-end gap-3">
-            <Button variant="outline" onClick={onClose}>
+            <Button className="cursor-pointer" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button onClick={handleStart} disabled={isJoinMeeting && !meetingUrl.trim()}>
+            <Button className="cursor-pointer" onClick={handleStart} disabled={isJoinMeeting && !meetingUrl.trim()}>
               {isJoinMeeting ? "Join Meeting" : "Start Meeting"}
             </Button>
           </div>

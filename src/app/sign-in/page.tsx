@@ -99,7 +99,7 @@ const SignIn = () => {
               required
             />
 
-            <Button type="submit" size="lg" disabled={pending} className="w-full">
+            <Button type="submit" size="lg" disabled={pending} className="w-full cursor-pointer">
               {pending ? "Signing in..." : "Continue"}
             </Button>
           </form>
@@ -112,7 +112,7 @@ const SignIn = () => {
               variant="outline"
               size="icon"
               disabled={pending}
-              className="hover:scale-105 transition-transform"
+              className="hover:scale-105 transition-transform cursor-pointer"
             >
               <FcGoogle className="w-6 h-6" />
             </Button>
@@ -121,7 +121,7 @@ const SignIn = () => {
               variant="outline"
               size="icon"
               disabled={pending}
-              className="hover:scale-105 transition-transform"
+              className="hover:scale-105 transition-transform cursor-pointer"
             >
               <FaGithub className="w-6 h-6" />
             </Button>

@@ -120,7 +120,7 @@ const SignUp = () => {
               type="submit"
               size="lg"
               disabled={pending}
-              className="w-full"
+              className="w-full cursor-pointer"
             >
               {pending ? "Creating account..." : "Continue"}
             </Button>
@@ -134,7 +134,7 @@ const SignUp = () => {
               variant="outline"
               size="icon"
               disabled={pending}
-              className="hover:scale-105 transition-transform"
+              className="cursor-pointer hover:scale-105 transition-transform"
             >
               <FcGoogle className="w-6 h-6" />
             </Button>
@@ -143,7 +143,7 @@ const SignUp = () => {
               variant="outline"
               size="icon"
               disabled={pending}
-              className="hover:scale-105 transition-transform"
+              className="cursor-pointer hover:scale-105 transition-transform"
             >
               <FaGithub className="w-6 h-6" />
             </Button>

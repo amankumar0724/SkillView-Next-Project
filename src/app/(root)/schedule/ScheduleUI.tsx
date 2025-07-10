@@ -295,7 +295,7 @@ export default function ScheduleUI() {
         {canSchedule && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button size="lg">Schedule Interview</Button>
+              <Button className="cursor-pointer" size="lg">Schedule Interview</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[500px] h-[calc(100vh-200px)] overflow-auto">
@@ -374,7 +374,7 @@ export default function ScheduleUI() {
                           {getUserId(interviewer) !== session?.user?.id && getUserId(interviewer) && (
                             <button
                               onClick={() => removeInterviewer(getUserId(interviewer)!)}
-                              className="hover:text-destructive transition-colors"
+                              className="hover:text-destructive transition-colors cursor-pointer"
                             >
                               <XIcon className="h-4 w-4" />
                             </button>
@@ -445,10 +445,10 @@ export default function ScheduleUI() {
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4">
-                  <Button variant="outline" onClick={() => setOpen(false)}>
+                  <Button className="cursor-pointer" variant="outline" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={scheduleMeeting} disabled={isCreating}>
+                  <Button className="cursor-pointer" onClick={scheduleMeeting} disabled={isCreating}>
                     {isCreating ? (
                       <>
                         <Loader2Icon className="mr-2 size-4 animate-spin" />

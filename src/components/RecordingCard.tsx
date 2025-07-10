@@ -56,11 +56,11 @@ function RecordingCard({ recording }: { recording: CallRecording }) {
         </div>
       </CardContent>
       <CardFooter className="gap-2">
-        <Button className="flex-1" onClick={() => window.open(recording.url, "_blank")}>
+        <Button className="flex-1 cursor-pointer" onClick={() => window.open(recording.url, "_blank")}>
           <PlayIcon className="size-4 mr-2" />
           Play Recording
         </Button>
-        <Button variant="secondary" onClick={handleCopyLink}>
+        <Button className="cursor-pointer" variant="secondary" onClick={handleCopyLink}>
           <CopyIcon className="size-4" />
         </Button>
       </CardFooter>

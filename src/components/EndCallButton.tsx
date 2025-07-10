@@ -73,7 +73,7 @@ function EndCallButton() {
   if (!call || !isMeetingOwner || !interviewId) return null;
 
   return (
-    <Button variant="destructive" onClick={endCall} disabled={loading}>
+    <Button className="cursor-pointer" variant="destructive" onClick={endCall} disabled={loading}>
       {loading ? "Ending..." : "End Meeting"}
     </Button>
   );

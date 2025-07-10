@@ -45,13 +45,13 @@ function MeetingCard({ interview }: MeetingCardProps) {
 
       <CardContent>
         {status === "live" && (
-          <Button className="w-full" onClick={() => joinMeeting(interview.streamCallId)}>
+          <Button className="w-full cursor-pointer" onClick={() => joinMeeting(interview.streamCallId)}>
             Join Meeting
           </Button>
         )}
 
         {status === "upcoming" && (
-          <Button variant="outline" className="w-full" disabled>
+          <Button variant="outline" className="w-full cursor-pointer" disabled>
             Waiting to Start
           </Button>
         )}
