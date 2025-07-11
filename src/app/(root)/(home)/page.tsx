@@ -21,8 +21,17 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<"start" | "join">();
   const [showLoader, setShowLoader] = useState(true);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const currentUser = session?.user;
+
+  // Redirect unauthenticated users to /sign-in
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/sign-in");
+    }
+  }, [status, router]);
+  
+
   // Control the 2-second loader timer
   useEffect(() => {
     const timer = setTimeout(() => setShowLoader(false), 2000);

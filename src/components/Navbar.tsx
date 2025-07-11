@@ -6,9 +6,10 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function Navbar() {
-  const { data: session } = useSession();
+  const { data: session,status } = useSession();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -31,7 +32,14 @@ function Navbar() {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
-
+  useEffect(() => {
+      if (status === "unauthenticated") {
+        router.replace("/sign-in");
+      }
+    }, [status, router]);
+    if (status === "loading") {
+      return null; 
+    }
   const handleProtectedNavigation = (href: string) => {
     if (!session) {
       signIn();
@@ -47,15 +55,20 @@ function Navbar() {
         <div className="flex h-16 items-center justify-center px-4 container mx-auto">
           <div className="flex items-center space-x-60">
             {/* LOGO */}
-            <Link
+            {/* <Link
               href="/"
               className="flex items-center gap-2 font-semibold text-2xl font-mono hover:opacity-80 transition-opacity"
-            >
+            > */}
+              <button
+                onClick={() => handleProtectedNavigation("/")}
+                className="flex items-center gap-2 font-semibold text-2xl font-mono hover:opacity-80 transition-opacity cursor-pointer"
+              >
               <Airplay className="size-8 text-[#ed145c]" />
               <span className="bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
                 SkillView
               </span>
-            </Link>
+              </button>
+            {/* </Link> */}
 
             {/* NAVIGATION LINKS */}
             <div className="flex items-center space-x-2">
