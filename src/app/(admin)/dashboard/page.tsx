@@ -92,7 +92,6 @@ function DashboardPage() {
                     {groupedInterviews[category.id]?.length ?? 0}
                   </Badge>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {groupedInterviews[category.id]?.map((interview: IInterview) => {
                     const candidateInfo = getCandidateInfo(users, interview.candidateId);
