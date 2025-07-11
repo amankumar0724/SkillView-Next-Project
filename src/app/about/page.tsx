@@ -26,7 +26,7 @@ function About() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300">
-                We're transforming the hiring process by creating a seamless virtual interview experience. 
+                We&rsquo;re transforming the hiring process by creating a seamless virtual interview experience. 
                 SkillView enables multiple interviewers to collaborate in real-time while candidates 
                 demonstrate their technical skills through our integrated coding environment.
               </p>
@@ -213,7 +213,7 @@ function About() {
               Our Vision
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-12">
-              We're building the future of technical interviews by combining the power of collaborative 
+              We&rsquo;re building the future of technical interviews by combining the power of collaborative 
               assessment with cutting-edge technology. Our platform bridges the gap between remote hiring 
               and in-person technical evaluations.
             </p>

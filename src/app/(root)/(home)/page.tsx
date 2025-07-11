@@ -10,17 +10,18 @@ import { Loader2Icon } from "lucide-react";
 import { QUICK_ACTIONS } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useSession } from "next-auth/react";
+import { InterviewPlain } from "@/types/interview";
 
 export default function Home() {
   const router = useRouter();
   const { isInterviewer, isCandidate, isLoading } = useUserRole();
-
-  const [interviews, setInterviews] = useState<any[] | null>(null);
+  
+  const [interviews, setInterviews] = useState<InterviewPlain[] | null>(null);
   const [fetchError, setFetchError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<"start" | "join">();
   const [showLoader, setShowLoader] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const currentUser = session?.user;
   // Control the 2-second loader timer
   useEffect(() => {

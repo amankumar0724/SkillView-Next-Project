@@ -38,19 +38,27 @@ const useGetCalls = () => {
     loadCalls();
   }, [client, session?.user?.id, status]);
 
+  const endedCalls = useMemo(() => {
   const now = new Date();
-
-  const endedCalls = useMemo(() => calls?.filter(({ state: { startsAt, endedAt } }) => {
+  return calls?.filter(({ state: { startsAt, endedAt } }) => {
     return (startsAt && new Date(startsAt) < now) || !!endedAt;
-  }), [calls]);
+  });
+}, [calls]);
 
-  const upcomingCalls = useMemo(() => calls?.filter(({ state: { startsAt } }) => {
+const upcomingCalls = useMemo(() => {
+  const now = new Date();
+  return calls?.filter(({ state: { startsAt } }) => {
     return startsAt && new Date(startsAt) > now;
-  }), [calls]);
+  });
+}, [calls]);
 
-  const liveCalls = useMemo(() => calls?.filter(({ state: { startsAt, endedAt } }) => {
+const liveCalls = useMemo(() => {
+  const now = new Date();
+  return calls?.filter(({ state: { startsAt, endedAt } }) => {
     return startsAt && new Date(startsAt) < now && !endedAt;
-  }), [calls]);
+  });
+}, [calls]);
+
 
   return { calls, endedCalls, upcomingCalls, liveCalls, isLoading };
 };

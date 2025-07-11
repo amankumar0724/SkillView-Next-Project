@@ -1,24 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, Send, Users, Video, Code, Headphones, CheckCircle, AlertCircle, Loader2, Link } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Users, Video, Code, Headphones, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    subject: "",
-    message: "",
-    inquiryType: "general"
-  });
 
-  const [emailStatus, setEmailStatus] = useState<EmailStatus>({
-    loading: false,
-    success: false,
-    error: null
-  });
 
-interface ContactFormData {
+  interface ContactFormData {
     name: string;
     email: string;
     company: string;
@@ -42,6 +29,23 @@ interface EmailTemplateParams {
     message: string;
     to_email: string;
 }
+
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
+    email: "",
+    company: "",
+    subject: "",
+    message: "",
+    inquiryType: "general"
+  });
+
+  const [emailStatus, setEmailStatus] = useState<EmailStatus>({
+    loading: false,
+    success: false,
+    error: null
+  });
+
+
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -83,10 +87,13 @@ const sendEmail = async (
         }
 
         return { success: true };
-    } catch (error: any) {
-        console.error('Email sending error:', error);
-        return { success: false, error: error.message };
-    }
+    } catch (error: unknown) {
+        const errorMessage =
+          error instanceof Error ? error.message : "An unknown error occurred";
+        console.error("Email sending error:", error);
+        return { success: false, error: errorMessage };
+      }
+
 };
 
   // Alternative: Send email using a simple mailto approach
@@ -156,6 +163,7 @@ ${formData.message}
         setEmailStatus({ loading: false, success: true, error: null });
       }
     } catch (error) {
+      console.log("Failed to send email: ",error);
       setEmailStatus({ 
         loading: false, 
         success: false, 
@@ -174,7 +182,7 @@ ${formData.message}
               Get in Touch
             </h1>
             <p className="text-xl md:text-2xl opacity-90">
-              Ready to revolutionize your hiring process? Contact our team to learn more about SkillView's virtual interview platform.
+              Ready to revolutionize your hiring process? Contact our team to learn more about SkillView&apos;s virtual interview platform.
             </p>
           </div>
         </div>
@@ -188,7 +196,7 @@ ${formData.message}
               {/* Contact Form */}
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  Let's Discuss Your Needs
+                  Let&apos;s Discuss Your Needs
                 </h2>
 
                 {/* Status Messages */}
@@ -197,7 +205,7 @@ ${formData.message}
                     <div className="flex items-center gap-2">
                       <CheckCircle className="size-5 text-green-600" />
                       <p className="text-green-800 dark:text-green-200 font-medium">
-                        Message sent successfully! We'll get back to you within 24 hours.
+                        Message sent successfully! We&apos;ll get back to you within 24 hours.
                       </p>
                     </div>
                   </div>
@@ -350,7 +358,7 @@ ${formData.message}
                     <p>1. Sign up at <a href="https://www.emailjs.com" target="_blank" className="underline">emailjs.com</a></p>
                     <p>2. Create an email service and template</p>
                     <p>3. Replace the placeholders in the code with your actual IDs</p>
-                    <p>4. For now, clicking "Send Message" will open your default email client</p>
+                    <p>4. For now, clicking &quot;Send Message&quot; will open your default email client</p>
                   </div>
                 </div>
               </div>

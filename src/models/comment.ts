@@ -5,6 +5,7 @@ export interface IComment extends Document {
   rating: number;
   interviewerId: string;
   interviewId: mongoose.Types.ObjectId;
+  createdAt:string;
 }
 
 const CommentSchema: Schema = new Schema(

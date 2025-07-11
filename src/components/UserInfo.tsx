@@ -1,9 +1,10 @@
 import { UserCircleIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IUser } from "@/models/user";
+
+import { AppUser } from "@/types/user";
 
 interface UserInfoProps {
-  user: Partial<IUser> | any;
+  user: AppUser;
 }
 
 function UserInfo({ user }: UserInfoProps) {
@@ -23,9 +24,9 @@ function UserInfo({ user }: UserInfoProps) {
   return (
     <div className="flex items-center gap-2">
       <Avatar className="h-8 w-8">
-        <AvatarImage src={user.image || user.avatar} alt={displayName} />
+        <AvatarImage src={user.image} alt={displayName} />
         <AvatarFallback>
-          {user.image || user.avatar ? (
+          {user.image? (
             initials
           ) : (
             <UserCircleIcon className="h-4 w-4" />

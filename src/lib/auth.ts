@@ -1,5 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import { Session } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import User from "@/models/user";
 import connectDb from "@/lib/db";
 import bcrypt from "bcryptjs";
@@ -7,9 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
-
-
-// Extend the Session type to include 'role'
+// Extend NextAuth session types
 declare module "next-auth" {
   interface Session {
     user: {
@@ -20,11 +17,25 @@ declare module "next-auth" {
       role?: "interviewer" | "candidate" | null;
     };
   }
+
   interface User {
     id?: string;
     role?: "interviewer" | "candidate";
   }
+
+  interface JWT {
+    id?: string;
+    role?: "interviewer" | "candidate";
+  }
 }
+
+type OAuthProfile = {
+  email?: string;
+  name?: string;
+  picture?: string;
+  avatar_url?: string;
+  login?: string;
+};
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -45,10 +56,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(
-        credentials: Record<"email" | "password", string> | undefined,
-        req?: any
-      ) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           console.log("Missing credentials");
           return null;
@@ -56,48 +64,28 @@ export const authOptions: NextAuthOptions = {
 
         try {
           await connectDb();
-          const user = await User.findOne({ email: credentials.email }) as {
-            _id: { toString: () => string };
-            email: string;
-            name?: string;
-            image?: string;
-            role?: "candidate" | "interviewer";
-            password?: string;
-          } | null;
-          console.log("User found:", user ? "Yes" : "No");
-          
-          if (!user) {
-            console.log("User not found");
+          const user = await User.findOne({ email: credentials.email });
+
+          if (!user || !user.password) {
+            console.log("User not found or missing password");
             return null;
           }
 
-          if (!user.password) {
-            console.log("User has no password (OAuth user)");
-            return null;
-          }
-
-          const isValidPassword = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
-          
-          console.log("Password valid:", isValidPassword);
-          
-          if (!isValidPassword) {
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) {
             console.log("Invalid password");
             return null;
           }
 
-          // Return user object that matches NextAuth expectations
           return {
             id: user._id.toString(),
             email: user.email,
             name: user.name,
             image: user.image,
-            role: user.role === "interviewer" ? "interviewer" : "candidate",
+            role: user.role ?? "candidate",
           };
         } catch (error) {
-          console.error("Authorization error:", error);
+          console.error("Auth error:", error);
           return null;
         }
       },
@@ -105,25 +93,24 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      // Only handle OAuth providers
       if (account?.provider === "google" || account?.provider === "github") {
         try {
           await connectDb();
 
-          if (!profile?.email) return false;
+          const userProfile = profile as OAuthProfile;
+          if (!userProfile?.email) return false;
 
-          const existingUser = await User.findOne({ email: profile.email });
-
-          if (!existingUser) {
+          const existing = await User.findOne({ email: userProfile.email });
+          if (!existing) {
             await User.create({
-              name: profile?.name || (profile as any)?.login || "Anonymous",
-              email: profile.email,
-              image: (profile as any)?.avatar_url || (profile as any)?.picture || null,
+              name: userProfile.name || userProfile.login || "Anonymous",
+              email: userProfile.email,
+              image: userProfile.avatar_url || userProfile.picture || null,
               role: "candidate",
             });
           }
         } catch (error) {
-          console.error("SignIn callback error:", error);
+          console.error("OAuth signIn error:", error);
           return false;
         }
       }
@@ -132,35 +119,32 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.id = (user as any).id;
+        token.id = user.id;
         token.email = user.email;
         token.name = user.name;
         token.image = user.image;
-        token.role = (user as any).role || "candidate";
+        token.role = user.role ?? "candidate";
       }
-      console.log(token.id);
       return token;
     },
-  
-  async session({ session, token }) {
-    if (token?.email) {
-      await connectDb();
 
-      const dbUser = await User.findOne({ email: token.email });
+    async session({ session, token }) {
+      if (token?.email) {
+        await connectDb();
+        const dbUser = await User.findOne({ email: token.email });
 
-      if (dbUser) {
-        session.user = {
-          id: dbUser._id.toString(), // ✅ Use Mongo _id
-          email: dbUser.email,
-          name: dbUser.name,
-          image: dbUser.image,
-          role: dbUser.role || "candidate",
-        };
+        if (dbUser) {
+          session.user = {
+            id: dbUser._id.toString(),
+            email: dbUser.email,
+            name: dbUser.name,
+            image: dbUser.image,
+            role: dbUser.role ?? "candidate",
+          };
+        }
       }
-    }
-
-    return session;
-  },
+      return session;
+    },
   },
   pages: {
     signIn: "/sign-in",

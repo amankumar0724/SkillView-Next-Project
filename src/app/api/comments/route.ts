@@ -18,7 +18,8 @@ export async function GET(req: NextRequest) {
   try {
     const comments = await Comment.find({ interviewId }).sort({ createdAt: -1 });
     return NextResponse.json(comments);
-  } catch (error) {
+  } catch (err) {
+    console.log("Error in fetching comments: ",err);
     return NextResponse.json({ error: "Failed to fetch comments" }, { status: 500 });
   }
 }
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(comment);
   } catch (error) {
+    console.log("Failed to post comment:",error);
     return NextResponse.json({ error: "Failed to post comment" }, { status: 500 });
   }
 }

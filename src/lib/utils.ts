@@ -10,11 +10,18 @@ import { InterviewPlain } from "@/types/interview";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+type GroupedInterviews = {
+  succeeded?: IInterview[];
+  failed?: IInterview[];
+  completed?: IInterview[];
+  upcoming?: IInterview[];
+};
 
-export const groupInterviews = (interviews: IInterview[]) => {
+
+export const groupInterviews = (interviews: IInterview[]): GroupedInterviews => {
   if (!interviews) return {};
 
-  return interviews.reduce((acc: any, interview: IInterview) => {
+  return interviews.reduce((acc: GroupedInterviews, interview: IInterview) => {
     const date = new Date(interview.startTime);
     const now = new Date();
 
@@ -31,6 +38,7 @@ export const groupInterviews = (interviews: IInterview[]) => {
     return acc;
   }, {});
 };
+
 
 export const getCandidateInfo = (users: IUser[], candidateId: string) => {
   const candidate = users?.find((user) => user._id?.toString() === candidateId);

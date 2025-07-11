@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Airplay, Home, LayoutDashboard, Calendar, Video, Contact, Scroll } from "lucide-react";
+import { Airplay, Home, LayoutDashboard, Calendar, Video, Contact } from "lucide-react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { FcAbout } from "react-icons/fc";
 
 function Navbar() {
   const { data: session } = useSession();

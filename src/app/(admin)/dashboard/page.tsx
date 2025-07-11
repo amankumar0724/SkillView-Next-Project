@@ -84,17 +84,17 @@ function DashboardPage() {
       <div className="space-y-8">
         {INTERVIEW_CATEGORY.map(
           (category) =>
-            groupedInterviews[category.id]?.length > 0 && (
+            ((groupedInterviews[category.id]?.length ?? 0) > 0) && (
               <section key={category.id}>
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-semibold">{category.title}</h2>
                   <Badge variant={category.variant}>
-                    {groupedInterviews[category.id].length}
+                    {groupedInterviews[category.id]?.length ?? 0}
                   </Badge>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {groupedInterviews[category.id].map((interview: IInterview) => {
+                  {groupedInterviews[category.id]?.map((interview: IInterview) => {
                     const candidateInfo = getCandidateInfo(users, interview.candidateId);
                     const startTime = new Date(interview.startTime);
 

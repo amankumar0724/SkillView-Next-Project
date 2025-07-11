@@ -20,6 +20,8 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { useSession } from "next-auth/react";
+import { IUser } from "@/models/user";
+import { IComment } from "@/models/comment";
 
 function getInitials(name: string = "") {
   return name
@@ -35,14 +37,15 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("3");
 
-  const [users, setUsers] = useState<any[]>([]);
-  const [comments, setComments] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
+  // const [loading, setLoading] = useState(true);
 
   const currentUserId = session?.user?.id;
 
   useEffect(() => {
     const fetchData = async () => {
+
       try {
         const [userRes, commentRes] = await Promise.all([
           fetch("/api/users"),
@@ -58,7 +61,7 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
         console.error(err);
         toast.error("Failed to load comments or users");
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -90,6 +93,7 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
       setRating("3");
       setIsOpen(false);
     } catch (error) {
+      console.log("Failed to submit comment: ",error);
       toast.error("Failed to submit comment");
     }
   };
@@ -106,7 +110,7 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
   );
 
   const getInterviewerInfo = (userId: string) => {
-    const user = users.find((u) => u.id === userId || u.clerkId === userId); // fallback for legacy data
+    const user = users.find((u) => u.id === userId); // fallback for legacy data
     return {
       name: user?.name || "Unknown",
       image: user?.image || "",

@@ -1,3 +1,5 @@
+"use client";
+
 import { DeviceSettings, useCall, VideoPreview } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import { Card } from "./ui/card";
@@ -11,22 +13,25 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
 
   const call = useCall();
 
-  if (!call) return null;
-
   useEffect(() => {
+    if (!call) return;
     if (isCameraDisabled) call.camera.disable();
     else call.camera.enable();
-  }, [isCameraDisabled, call.camera]);
+  }, [isCameraDisabled, call]);
 
   useEffect(() => {
+    if (!call) return;
     if (isMicDisabled) call.microphone.disable();
     else call.microphone.enable();
-  }, [isMicDisabled, call.microphone]);
+  }, [isMicDisabled, call]);
 
   const handleJoin = async () => {
+    if (!call) return;
     await call.join();
     onSetupComplete();
   };
+
+  if (!call) return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-background/95">
@@ -39,7 +44,6 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
               <p className="text-sm text-muted-foreground">Make sure you look good!</p>
             </div>
 
-            {/* VIDEO PREVIEW */}
             <div className="mt-4 flex-1 min-h-[400px] rounded-xl overflow-hidden bg-muted/50 border relative">
               <div className="absolute inset-0">
                 <VideoPreview className="h-full w-full" />
@@ -47,19 +51,17 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
             </div>
           </Card>
 
-          {/* CARD CONTROLS */}
-
+          {/* CONTROLS */}
           <Card className="md:col-span-1 p-6">
             <div className="h-full flex flex-col">
-              {/* MEETING DETAILS  */}
               <div>
                 <h2 className="text-xl font-semibold mb-1">Meeting Details</h2>
                 <p className="text-sm text-muted-foreground break-all">{call.id}</p>
               </div>
 
               <div className="flex-1 flex flex-col justify-between">
-                <div className="spacey-6 mt-8">
-                  {/* CAM CONTROL */}
+                <div className="space-y-6 mt-8">
+                  {/* CAMERA CONTROL */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -112,7 +114,7 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
                   </div>
                 </div>
 
-                {/* JOIN BTN */}
+                {/* JOIN BUTTON */}
                 <div className="space-y-3 mt-8">
                   <Button className="w-full cursor-pointer" size="lg" onClick={handleJoin}>
                     Join Meeting
@@ -129,4 +131,5 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
     </div>
   );
 }
+
 export default MeetingSetup;

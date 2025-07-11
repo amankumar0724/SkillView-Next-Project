@@ -43,7 +43,7 @@ export default function ScheduleUI() {
     streamCallId: string;
     candidateId: string;
     interviewerIds: string[];
-    [key: string]: any;
+    [key: string]: unknown;
   };
   const [interviews, setInterviews] = useState<Interview[]>([]);
   
@@ -53,7 +53,7 @@ export default function ScheduleUI() {
     role: "candidate" | "interviewer" | "admin";
     name: string;
     email: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   const [users, setUsers] = useState<User[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);

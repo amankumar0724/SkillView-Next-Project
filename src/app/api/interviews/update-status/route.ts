@@ -10,7 +10,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Missing id or status' }, { status: 400 });
   }
 
-  const update: any = { status };
+  const update: { status: string; endTime?: number } = { status };
   if (status === 'completed') {
     update.endTime = Date.now();
   }
