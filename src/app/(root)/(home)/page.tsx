@@ -90,7 +90,7 @@ export default function Home() {
       <div className="rounded-lg bg-card p-6 border shadow-sm mb-10">
         <div className="flex items-center gap-4 mb-4">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
-          Welcome back 
+          Welcome  
         </h1>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ed145c] to-[#cb3769] bg-clip-text text-transparent">
           {currentUser?.name || "User"}
