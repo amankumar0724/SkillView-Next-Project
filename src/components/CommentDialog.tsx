@@ -189,12 +189,12 @@ function CommentDialog({ interviewId }: { interviewId: string }) {
             <div className="space-y-2">
               <Label>Rating</Label>
               <Select value={rating} onValueChange={setRating}>
-                <SelectTrigger>
+                <SelectTrigger className="cursor-pointer">
                   <SelectValue placeholder="Select rating" />
                 </SelectTrigger>
                 <SelectContent>
                   {[1, 2, 3, 4, 5].map((value) => (
-                    <SelectItem key={value} value={value.toString()}>
+                    <SelectItem className="cursor-pointer" key={value} value={value.toString()}>
                       <div className="flex items-center gap-2">{renderStars(value)}</div>
                     </SelectItem>
                   ))}

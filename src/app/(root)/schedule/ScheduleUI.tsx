@@ -329,7 +329,7 @@ export default function ScheduleUI() {
                     value={formData.candidateId}
                     onValueChange={(candidateId) => setFormData({ ...formData, candidateId })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="cursor-pointer">
                       <SelectValue placeholder="Select candidate" />
                     </SelectTrigger>
                     <SelectContent>
@@ -340,6 +340,7 @@ export default function ScheduleUI() {
                           .filter(candidate => getUserId(candidate)) // Filter out candidates without valid IDs
                           .map((candidate, index) => (
                             <SelectItem 
+                              className="cursor-pointer"
                               key={getUserId(candidate) || `candidate-${index}`} 
                               value={getUserId(candidate) ?? ""}
                             >
@@ -386,7 +387,7 @@ export default function ScheduleUI() {
 
                   {/* Interviewer selection dropdown - always visible */}
                   <Select onValueChange={addInterviewer} value="">
-                    <SelectTrigger>
+                    <SelectTrigger className="cursor-pointer">
                       <SelectValue placeholder="Select interviewer" />
                     </SelectTrigger>
                     <SelectContent>
@@ -397,6 +398,7 @@ export default function ScheduleUI() {
                           .filter(interviewer => getUserId(interviewer)) // Filter out interviewers without valid IDs
                           .map((interviewer, index) => (
                             <SelectItem 
+                            className="cursor-pointer"
                               key={`available-${getUserId(interviewer) || index}`} 
                               value={getUserId(interviewer) ?? ""}
                             >
@@ -420,7 +422,7 @@ export default function ScheduleUI() {
                       selected={formData.date}
                       onSelect={(date) => date && setFormData({ ...formData, date })}
                       disabled={(date) => date < new Date()}
-                      className="rounded-md border"
+                      className="rounded-md border cursor-pointer"
                     />
                   </div>
 
@@ -430,12 +432,12 @@ export default function ScheduleUI() {
                       value={formData.time}
                       onValueChange={(time) => setFormData({ ...formData, time })}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="cursor-pointer">
                         <SelectValue placeholder="Select time" />
                       </SelectTrigger>
                       <SelectContent>
                         {TIME_SLOTS.map((time) => (
-                          <SelectItem key={time} value={time}>
+                          <SelectItem className="cursor-pointer" key={time} value={time}>
                             {time}
                           </SelectItem>
                         ))}
