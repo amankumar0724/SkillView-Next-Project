@@ -183,17 +183,18 @@ const SignUp = () => {
               Sign in
             </Link>
           </p>
-          <div className="relative flex justify-center mt-3 group">
-            <div className="w-5 h-5 flex items-center justify-center border border-muted-foreground rounded-full text-muted-foreground text-sm cursor-pointer group-hover:bg-muted">
-              i
-            </div>
-            <div className="absolute bottom-full mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Use credentials method to signup as interviewer
-            </div>
-          </div>
-         
-          
-          
+            <div className="relative mt-2 flex justify-center">
+  <div className="relative group inline-flex">
+    <div className="w-5 h-5 flex items-center justify-center border border-muted-foreground rounded-full text-muted-foreground text-sm cursor-pointer group-hover:bg-muted">
+      i
+    </div>
+    <div className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity duration-100 whitespace-nowrap">
+      Use credentials to signup as interviewer
+    </div>
+  </div>
+</div>
+
+           
         </CardContent>
       </Card>
     </div>
