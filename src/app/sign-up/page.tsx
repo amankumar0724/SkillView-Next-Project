@@ -13,6 +13,14 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -24,6 +32,7 @@ const SignUp = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    role: "",
     password: "",
     confirmPassword: "",
   });
@@ -69,9 +78,10 @@ const SignUp = () => {
         <CardHeader className="text-center space-y-1">
           <CardTitle className="text-2xl font-bold">Sign up to SkillView</CardTitle>
           <CardDescription className="text-muted-foreground text-sm">
-            Create your account with email or continue with a provider
-          </CardDescription>
+            Create your account with email or continue with a provider 
+             </CardDescription>
         </CardHeader>
+        
 
         {!!error && (
           <div className="bg-destructive/15 text-destructive text-sm px-4 py-2 mb-4 rounded-md flex items-center gap-2">
@@ -98,6 +108,18 @@ const SignUp = () => {
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
             />
+            <Select
+              disabled={pending}
+              onValueChange={(value) => setForm({ ...form, role: value.toLowerCase() })}
+            >
+              <SelectTrigger className="w-full cursor-pointer">
+                <SelectValue placeholder="Select role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem className="cursor-pointer" value="interviewer">Interviewer</SelectItem>
+                <SelectItem className="cursor-pointer" value="candidate">Candidate</SelectItem>
+              </SelectContent>
+            </Select>
             <Input
               type="password"
               placeholder="Password"
@@ -124,6 +146,8 @@ const SignUp = () => {
             >
               {pending ? "Creating account..." : "Continue"}
             </Button>
+            
+
           </form>
 
           <Separator className="my-6" />
@@ -148,6 +172,7 @@ const SignUp = () => {
               <FaGithub className="w-6 h-6" />
             </Button>
           </div>
+          
 
           <p className="mt-6 text-sm text-center text-muted-foreground">
             Already have an account?{" "}
@@ -158,6 +183,17 @@ const SignUp = () => {
               Sign in
             </Link>
           </p>
+          <div className="relative flex justify-center mt-3 group">
+            <div className="w-5 h-5 flex items-center justify-center border border-muted-foreground rounded-full text-muted-foreground text-sm cursor-pointer group-hover:bg-muted">
+              i
+            </div>
+            <div className="absolute bottom-full mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              Use credentials method to signup as interviewer
+            </div>
+          </div>
+         
+          
+          
         </CardContent>
       </Card>
     </div>
